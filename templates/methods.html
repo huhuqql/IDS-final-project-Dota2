@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<!-- saved from url=(0051)https://getbootstrap.com/docs/4.1/examples/product/ -->
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Dota2 Prediction</title>
+
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="css/product.css" rel="stylesheet">
+  <script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/hero_id.js"></script>
+  <style>
+    .html,
+    body {
+      padding: 0px;
+      background-color: rgb(85, 90, 97);
+    }
+
+    .page {
+      background: #2F3238;
+      padding: 100px 0;
+      position: relative;
+      z-index: 99;
+    }
+
+    .page-alternate {
+      background: #26292E;
+      padding: 100px 0;
+      position: relative;
+      z-index: 99;
+    }
+
+    .page-header {
+      background: url(img/bg/dota2.jpg) no-repeat;
+      background-position: center;
+      padding: 100px 0;
+      position: relative;
+      z-index: 99;
+    }
+
+    .content-page {
+      width: 80%;
+      margin-bottom: 40px;
+      margin-top: 20px;
+    }
+
+    .title-page {
+      width: 70%;
+      margin-bottom: 40px;
+      margin-top: 20px;
+    }
+
+    .title-page .title {
+      color: aliceblue;
+      font-size: 48px;
+      margin: 0 auto;
+      font-family: Arial;
+    }
+
+    .title-page .title-description {
+      color: rgb(187, 179, 179);
+      font-size: 20px;
+      font-weight: 100;
+      margin: 0 auto;
+      font-family: Arial;
+    }
+
+    .icons-example ul {
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .icons-example ul li {
+      display: inline-block;
+      margin: 5px;
+      list-style: none;
+      cursor: pointer;
+    }
+
+    blockquote {
+      padding: 15px 20px;
+      border-left: 2px solid #DE5E60;
+    }
+
+    blockquote p {
+      color: rgb(132, 133, 136);
+      margin-bottom: 0;
+      font-size: 18px;
+      line-height: 28px;
+    }
+
+    blockquote small:before {
+      content: '';
+    }
+
+    .predict_container {
+      position: relative;
+    }
+
+    .cat-link {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate3d(-50%, -50%, 0);
+      z-index: 100;
+      text-transform: uppercase;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <nav class="navbar sticky-top navbar-expand-lg navbar-dark bg-black">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+      aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <a class="navbar-brand" href="index.html">
+      <img src="img/logo.png" width="30" height="30" class="d-inline-block align-top" alt=""> Dota2
+    </a>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="home.html">Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="prediction.html">Prediction</a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Methods
+            <span class="sr-only">(current)</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+
+
+
+  <div class="page-header">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <div style="text-align:center" class="title-page">
+          <h2 class="title">Dota2 Prediction</h2>
+          <h3 class="title-description">A Machine Learning Model that helps you predict the winning side</h3>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page-alternate">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <div class="title-page">
+          <h2 class="title">Data Collection and Cleaning</h2>
+          <blockquote style="margin:15px">
+            <p>We collected 65000 matches using Dota2 API. We cleaned the data set during our collection process.</p>
+          </blockquote>
+          <h3 class="title-description"></h3>
+        </div>
+
+      </div>
+      <div class="row justify-content-center">
+        <div class="content-page">
+          <h2 style="color:#B9B1B1">1. Collection and Cleaning </h2>
+          <p style="margin-top:10px;color:#B9B1B1">Valve (Dota2 Publisher) provides a strong Web API for developers to fetch both match and player data. For this
+            project, we built a local python script which calls the Dota2 Web API and save each results into a local file.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">However, there are lot of factors that would affect the data set that we expected. Therefore, We filtered out the
+            invalid and inappropiate data during our collection.</p>
+          <h5 style="color:#B9B1B1">1.1 Invalid Matches</h5>
+          <p style="margin-top:-8px;color:#B9B1B1">The match details we fetched with the Web API include every single match generated (not completed). Therefore,
+            there are quite a lot matches with absent players, little match duration or zero skills and item build. We identified
+            these matches as invalid matches during our collection process, and added arguments to detect invalid matches.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">In addition to invalid games, we also encountered a lot of private matches, which are mostly practice matches (does
+            not count for win or lose) and local matches which we have no access to. We also filtered out these matches.</p>
+
+          <h5 style="color:#B9B1B1">1.2 Match Modes</h5>
+          <p style="margin-top:-8px;color:#B9B1B1">There are currently 23 modes of game in Dota2. However, not all of them are typical. For example, only two players
+            play against each other in the "Mid Only" mode, which cannot fit into our data. In addition, entertaining modes
+            like "Ability Draft" or "All Random Death Match" can also negatively affect our data set.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">Therefore the final 7 modes we selected is:</p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>All Pick </b>: Players can select any hero from a pool of 115 heros.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>Ranked All Pick </b>: Ranked Matches. Players can select any hero from a pool of 115 heros.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>Captain’s Mode </b>: The most common mode used in professional matches. Each team would have a captain. Two teams
+            ban and pick heros from a pool of 115 heros with a specific order.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>Random Draft </b>: Each player can select a hero from from a pool of 50 random heros. </p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>Captains Draft </b>: Similar to Captain's Mode. But with a pool of 50 random heros.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>Single Draft </b>: Players will be given 3 heros randomly. They can only choose one hero from the three.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">·
+            <b>All Random </b>: Each player will be randomly assigned a hero. They can have only one chance to re-random.</p>
+          <p style="margin-top:-8px;color:#B9B1B1">These seven modes are the most common and typical game modes in Dota2, which we believe can be used safely to be
+            combined into our data set. </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <div class="title-page">
+          <h2 class="title">Data Exploration</h2>
+          <blockquote style="margin:15px">
+            <p>We built two models in total - "Logistic Regression" and "Nerual Network" - to help predict the winning side.
+              And for the final production, we choose the one with higher accuracy.</p>
+          </blockquote>
+          <h3 class="title-description"></h3>
+        </div>
+
+        <div class="row justify-content-center">
+          <div class="content-page">
+            <h2 style="color:#B9B1B1">2. Feature Vector </h2>
+
+            <p style="margin-top:10px;color:#B9B1B1">DotA2 has a player matching mechanism that will automatically match the players with similar competition level
+              (also called “matchmaking ranking”) together in a match. By assuming every player in a match can play the game
+              equally well, we can simplify our prediction for the match result by solely focusing on hero selection (the
+              role each player chooses in a match). More specifically, our analysis aims to capture the effect of the following
+              three types of input on the match outcome: which heroes are playing in a given match, which heroes are being
+              played together as a lineup of five, and which lineup of five opposing heroes they are competing against. </p>
+            <p style="margin-top:-8px;color:#B9B1B1">Under such assumption, we designed our feature vector as follows: since there are 120 heroes in total in DotA2
+              and we want to distinguish hero selection on either the “Radiant” or “Dire” side, the input feature vector
+              is constructed as a binary vector x ∈ R (120x2) encoding the presence or absence of a hero in the match. The
+              first half of the feature vector (X1 ...X120) represents the Radiant side and the second half (X121…X240) represents
+              the Dire side. More specifically, the first half of the feature vector is constructed as follows:</p>
+            <img src="img/m1.png">
+            <p style="margin-top:10px;color:#B9B1B1">Similarly, the second half of the feature vector is constructed as follows: </p>
+            <img src="img/m2.png">
+
+            <h2 style="margin-top:10px;color:#B9B1B1">3. Models </h2>
+            <p style="margin-top:10px;color:#B9B1B1">Drawing on existing literature of sports analytics, we experimented with two machine learning models for predicting
+              DotA2 match outcomes: Logistic Regression and Neural Networks. We finally decided to use Neural Networks because
+              it has been shown to be most effective at our prediction task.</p>
+            <h5 style="color:#B9B1B1">3.1 Logistic Regression</h5>
+            <p style="margin-top:10px;color:#B9B1B1">After randomly splitting the entire dataset (65,921 matches) into training (46,144 matches) and test dataset
+              (19,777 matches), we first tried logistic regression model on the training data and followed up with 10-fold
+              cross validation to check if the result holds up more precisely. The logistic regression model aims to minimize
+              the following cost function:</p>
+            <img style="width:100%;" src="img/m3.png">
+            <p style="margin-top:10px;color:#B9B1B1">The model accuracy on the test data is around 59.1%. This is further affirmed by an accuracy of 59.3% obtained
+              through 10-fold cross validation. However, a test error of 41% is not sufficient for our prediction task. We
+              therefore proceeded to experiment with the Neural Network model.
+            </p>
+            <h5 style="color:#B9B1B1">3.2 Neural Networks</h5>
+
+            <p style="margin-top:10px;color:#B9B1B1">We experimented with different configurations of neural networks to find the optimal approach. For our purpose,
+              the most successful neural net used three layers, 12 and 6 neurons in the first two layers with the rectifier
+              (‘relu’) activation function and the sigmoid function on the output layer. Relu has been commonly used as an
+              activation function because it performed better than sigmoid activation functions in deep NNs (Glorot, Bordes,
+              and Bengio, 2011). Sigmoid function is used to ensure our network output is between 0 and 1 and easy to map
+              to either the Radiant or the Dire class. The network architecture is shown below.
+            </p>
+            <img style="width:100%;" src="img/m4.png">
+            <p style="margin-top:10px;color:#B9B1B1">After training the model for 150 epochs, our neural network successfully achieved an accuracy of 73% on test
+              data. The train and test accuracy for all 150 epochs is plotted in the chart below. We can see that the model
+              is showing comparable skills on both the train and test data, indicating that our neural net has not overfit
+              the data.
+            </p>
+            <img style="width:100%;" src="img/m5.png">
+            <p style="margin-top:10px;color:#B9B1B1">
+              <b>References</b>
+            </p>
+            <p style="margin-top:-8px;color:#B9B1B1">
+              Glorot, X., Bordes, A., and Bengio, Y. (2011). Deep sparse rectifier networks. In AISTATS, vol. 15 (pp. 315323).
+            </p>
+            <p style="margin-top:-8px;color:#B9B1B1">
+              Song, K., Zhang, T., &amp; Ma, C. (2015). Predicting the winning side of DotA2.
+            </p>
+            <p style="margin-top:-8px;color:#B9B1B1">
+              Kalyanaraman (2015). To win or not to win? A prediction model to determine the outcome of a DotA2 match
+            </p>
+          </div>
+
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page-alternate">
+    <div class="container">
+      <div class="row justify-content-center">
+
+        <div class="title-page">
+          <h2 class="title">Next Step</h2>
+          <blockquote style="margin:15px">
+            <p>There are still plenty of improvements that can make our prediction more accurate.</p>
+          </blockquote>
+          <h3 class="title-description"></h3>
+        </div>
+        <div class="row justify-content-center">
+          <div class="content-page">
+            <h2 style="color:#B9B1B1">4. Improvements </h2>
+
+            <p style="margin-top:10px;color:#B9B1B1">Currently, the model we built can help us predicting the winning side of a game before the game starts. However,
+              we would like to build a more powerful model that can predict the winning side during a match in real-time,
+              which can also take player's level into account. There are several factors that we need to take into account
+              to improve our model.</p>
+
+            <h5 style="color:#B9B1B1">4.1 Player Data </h5>
+            <p style="margin-top:10px;color:#B9B1B1">For the current model we built, we are assuming that each player in a match is playing equally (with the same
+              abilities to play any hero). However, in real world matches, player's ability to play each hero varies. For
+              example, one plays quite good at Anitimage will probably perform poorly playing Lion. The positions and heros
+              a player is good at should therefore be taken into consideration to analyze the result of a match.
+            </p>
+            <p style="margin-top:-8px;color:#B9B1B1">
+              For our future study, we expect to take the player's past hero experience into account when building our model, so the model
+              could more accurately predict the winning side.
+            </p>
+            <h5 style="color:#B9B1B1">4.2 Items and Skills</h5>
+            <p style="margin-top:10px;color:#B9B1B1">Items and skills are also the key factors that can influnce win or lose. For example, the wrong item build on
+              a specific hero might be the main reason of losing the game. Therefore, we hope that through item and skill
+              analysis, we could reduce the impact of hero drafts on the final results. Or in other words, the draft should not be used to predict the winning side alone.
+            </p>
+
+            <h5 style="color:#B9B1B1">4.3 Gamification</h5>
+            <p style="margin-top:10px;color:#B9B1B1"> To achieve real-time prediction, we would like to gamify the prediction process. For example, we would like to
+              use the Dota2 map as the background and monitor the match through hero icons moving over the map.
+            </p>
+            <p style="margin-top:8px;color:#B9B1B1"> This process would require that our model should take the item and skill as both factors and outputs. Therefore,
+              gamification is our ultimate goal for Dota2 prediction.
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <footer>
+
+  </footer>
+
+
+  <script src="js/popper.min.js"></script>
+  <script src="js/bootstrap.min.js"></script>
+
+
+</body>
+
+</html>
